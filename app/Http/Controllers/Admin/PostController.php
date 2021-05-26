@@ -48,18 +48,9 @@ class PostController extends Controller
        $post_obj = new Post();
        $post_obj->fill($data);
 
-       $slug = Str::slug($post->title, '-');
-       $slug_base = $slug;
-       $contatore = 1;
-       $post_with_slug = Post::where('slug', '=', $slug)->first();
-       while ($post_with_slug {
-           $slug = $slug_base . '-' - $contatore;
-           $contatore++;
 
-           $post_with_slug = Post::where(('slug', '=', $slug)->first();
-       })
        
-       $post_obj->slug = $slug;
+       $post_obj->slug = $this->generateSlug($post_obj->title);
        $post_obj->save();
 
        return redirect()->route('admin.posts.index');
@@ -73,7 +64,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -84,7 +75,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -96,7 +87,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $data = $request->all();
+
+        $data['slug'] = $this->generateSlug($data['title'], $post->title != $data['title']);
+        
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.show', compact('post'));
     }
 
     /**
@@ -107,6 +110,30 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('admin.posts.index');
+    }
+
+    private function generateSlug(string $title, bool $change = true)
+    {
+        $slug = Str::slug($title, '-');
+
+        if(!$change) {
+            return $slug;
+        }
+
+
+        $slug_base = $slug;
+        $contatore = 1;
+        $post_with_slug = Post::where('slug', '=', $slug)->first();
+        while ($post_with_slug) {
+            $slug = $slug_base . '-' . $contatore;
+            $contatore++;
+ 
+            $post_with_slug = Post::where('slug', '=', $slug)->first();
+        }
+
+        return $slug;
     }
 }

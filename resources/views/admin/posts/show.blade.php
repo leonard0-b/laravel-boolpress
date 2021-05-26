@@ -2,17 +2,11 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <a href="{{route('admin.posts.create')}}">Nuovo Post</a>
-        </div>
-    </div>
     <div class="row justify-content-center">
-    @foreach ($posts as $post)
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header">
-                <a href="{{route('admin.posts.show', ['post' => $post->id])}}">{{$post->title}}</a>
+                <h2>{{$post->title}}</h2>
                 </div>
                 <div class="card-body">
                     {{$post->content}}
@@ -21,8 +15,14 @@
                     </div>
                 </div>
             </div>
+            <div class="delete">
+                <form action="{{route('admin.posts.destroy', ['post' => $post->id])}}" method='post'>
+                @csrf
+                @method('DELETE')
+                <input onclick="return confirm('Are you sure?')" type="submit" name='Delete :(' value='Delete :('>
+                </form>
+            </div> 
         </div>
-    @endforeach
     </div>
 </div>
 
