@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Post;
+use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -26,8 +27,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view ('admin.posts.create');
+    {   
+        $categories = Category::all();
+
+        return view ('admin.posts.create', compact('catefories'));
     }
 
     /**
@@ -94,7 +97,7 @@ class PostController extends Controller
 
         $data = $request->all();
 
-        $data['slug'] = $this->generateSlug($data['title'], $post->title != $data['title']);
+        $data['slug'] = $this->generateSlug($data['title'], $post->title != $data['title'], $post->slug);
         
 
         $post->update($data);
@@ -115,15 +118,14 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index');
     }
 
-    private function generateSlug(string $title, bool $change = true)
+    private function generateSlug(string $title, bool $change = true, string $old_slug = '')
     {
-        $slug = Str::slug($title, '-');
 
         if(!$change) {
-            return $slug;
+            return $old_slug;
         }
 
-
+        $slug = Str::slug($title, '-');
         $slug_base = $slug;
         $contatore = 1;
         $post_with_slug = Post::where('slug', '=', $slug)->first();

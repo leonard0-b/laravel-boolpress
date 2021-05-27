@@ -17,6 +17,7 @@
                     {{ __('You are logged in!') }}
                 </div>
             </div>
+            <a href="{{route('admin.posts.index')}}">Tutti i post</a>
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@
                 <form action="{{route('admin.posts.destroy', ['post' => $post->id])}}" method='post'>
                 @csrf
                 @method('DELETE')
-                <input onclick="return confirm('Are you sure?')" type="submit" name='Delete :(' value='Delete :('>
+                <input class="btn btn-danger " onclick="return confirm('Are you sure?')" type="submit" name='Delete :(' value='Delete :('>
                 </form>
             </div> 
         </div>
