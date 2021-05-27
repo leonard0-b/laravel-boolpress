@@ -30,7 +30,7 @@ class PostController extends Controller
     {   
         $categories = Category::all();
 
-        return view ('admin.posts.create', compact('catefories'));
+        return view ('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -42,6 +42,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'category_id' => 'exists:categories, id|nullable',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
