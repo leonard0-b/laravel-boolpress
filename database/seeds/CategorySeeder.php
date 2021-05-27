@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 use App\Category;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
@@ -30,3 +30,4 @@ class CategorySeeder extends Seeder
         }
     }
 }
+
