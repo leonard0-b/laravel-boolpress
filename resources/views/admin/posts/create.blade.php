@@ -20,7 +20,7 @@
                         <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach
                     </select>
-                    @error('title')
+                    @error('categories')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
