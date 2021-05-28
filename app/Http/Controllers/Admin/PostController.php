@@ -52,8 +52,6 @@ class PostController extends Controller
        $post_obj = new Post();
        $post_obj->fill($data);
 
-
-       
        $post_obj->slug = $this->generateSlug($post_obj->title);
        $post_obj->save();
 
@@ -79,7 +77,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -92,6 +91,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
+            'category_id' => 'exists:categories,id|nullable',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
