@@ -6,26 +6,22 @@
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header">
-                <h2>{{$post->title}}</h2>
-                @if ($post->category)
-                <h5>{{$post->category->name}}</h5>
-                @endif
+                <h5>{{$category->name}}</h5>
                 </div>
                 <div class="card-body">
-                    {{$post->content}}
                     <div>
-                        <a href="{{route('admin.posts.edit', ['post' => $post->id])}}">Edit</a>
+                        <a href="{{route('admin.categories.edit', ['category' => $category->id])}}">Edit</a>
                     </div>
                 </div>
             </div>
             <div class="delete">
-                <form action="{{route('admin.posts.destroy', ['post' => $post->id])}}" method='post'>
+                <form action="{{route('admin.categories.destroy', ['category' => $category->id])}}" method='post'>
                 @csrf
                 @method('DELETE')
                 <input class="btn btn-danger " onclick="return confirm('Are you sure?')" type="submit" name='Delete :(' value='Delete :('>
                 </form>
             </div> 
-            <a class="btn btn-dark" href="{{route('admin.posts.index')}}">Home</a>
+            <a class="btn btn-dark" href="{{route('admin.categories.index')}}">Home</a>
         </div>
     </div>
 </div>

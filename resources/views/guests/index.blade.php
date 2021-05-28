@@ -82,7 +82,7 @@
                 <div class="title m-b-md">
                     Boolpress
                 </div>
-                <a class="links" href="{{ route('posts.index') }}">Post</a>
+                <a class="links" href="{{ route('posts.index') }}">POST</a>
             </div>
         </div>
     </body>

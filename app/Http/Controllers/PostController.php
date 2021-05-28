@@ -18,5 +18,6 @@ class PostController extends Controller
         $post = Post::where('slug', '=', $slug)->first();
         return view('guests.posts.show', compact('post'));
     }
-}
+}    
+    
 
