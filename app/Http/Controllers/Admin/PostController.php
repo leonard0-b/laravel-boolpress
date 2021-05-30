@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Mail\SendNewMail;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -60,8 +62,10 @@ class PostController extends Controller
        $post_obj->fill($data);
 
        $post_obj->slug = $this->generateSlug($post_obj->title);
-       $post->img = $img;
+       $post_obj->img = $img;
        $post_obj->save();
+
+       Mail::to('mail@mail.it')->send(new SendNewMail());
 
        return redirect()->route('admin.posts.index');
     }

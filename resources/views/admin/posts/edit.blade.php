@@ -39,7 +39,7 @@
                     @enderror
                 </div>
                 <div>
-                    <img src="{{asset('storage/'.$post->img}}" alt="">
+                    <img src="{{asset('storage/'.$post->img)}}" alt="">
                 </div>
                 <div class="form-group">
                     <label for="img">Img</label>
