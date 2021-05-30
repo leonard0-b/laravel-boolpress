@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>Nuovo Post</h2>
+            <h2>New Post</h2>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form action="{{route('admin.posts.store')}}" method="post">
+            <form action="{{route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
             @csrf 
             @method('POST')
                 <div class="form-group">
@@ -35,6 +35,13 @@
                     <label for="content">Content</label>
                     <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content">{{old('content')}}</textarea>
                     @error('content')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="img">Img</label>
+                    <input type="file" name="img" class="form-control-file @error('img') is-invalid @enderror" id="img">
+                    @error('img')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>

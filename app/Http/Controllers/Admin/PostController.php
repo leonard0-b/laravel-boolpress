@@ -6,6 +6,7 @@ use App\Post;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -45,14 +46,21 @@ class PostController extends Controller
             'category_id' => 'exists:categories,id|nullable',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'img' => 'image|max:500|nullable'
         ]);
 
        $data = $request->all();
-        
+       
+       $img = null;
+       if (array_key_exists('img', $data)) {
+        $img = Storage::put('uploads', $data['img']);
+       }
+       
        $post_obj = new Post();
        $post_obj->fill($data);
 
        $post_obj->slug = $this->generateSlug($post_obj->title);
+       $post->img = $img;
        $post_obj->save();
 
        return redirect()->route('admin.posts.index');
@@ -94,13 +102,17 @@ class PostController extends Controller
             'category_id' => 'exists:categories,id|nullable',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'img' => 'image|max:500|nullable'
         ]);
 
         $data = $request->all();
 
         $data['slug'] = $this->generateSlug($data['title'], $post->title != $data['title'], $post->slug);
+        if (array_key_exists('img', $data)) {
+            $img = Storage::put('uploads', $data['img']);
+            $data['img'] = $img;    
+        }
         
-
         $post->update($data);
 
         return redirect()->route('admin.posts.show', compact('post'));

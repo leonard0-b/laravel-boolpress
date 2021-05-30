@@ -9,7 +9,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="post">
+            <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="post" enctype="multipart/form-data">
             @csrf 
             @method('PATCH')
                 <div class="form-group">
@@ -35,6 +35,16 @@
                     <label for="content">Content</label>
                     <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content">{{old('content', $post->content)}}</textarea>
                     @error('content')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <div>
+                    <img src="{{asset('storage/'.$post->img}}" alt="">
+                </div>
+                <div class="form-group">
+                    <label for="img">Img</label>
+                    <input type="file" name="img" class="form-control-file @error('img') is-invalid @enderror" id="img">
+                    @error('img')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
