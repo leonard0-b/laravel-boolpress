@@ -48,21 +48,21 @@ class PostController extends Controller
             'category_id' => 'exists:categories,id|nullable',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'img' => 'image|max:500|nullable'
+            'cover' => 'nullable|image|max:512|'
         ]);
 
        $data = $request->all();
        
-       $img = null;
-       if (array_key_exists('img', $data)) {
-        $img = Storage::put('uploads', $data['img']);
+       $cover = null;
+       if (array_key_exists('cover', $data)) {
+        $cover = Storage::put('uploads', $data['cover']);
        }
        
        $post_obj = new Post();
        $post_obj->fill($data);
 
        $post_obj->slug = $this->generateSlug($post_obj->title);
-       $post_obj->img = $img;
+       $post_obj->img = $cover;
        $post_obj->save();
 
        Mail::to('mail@mail.it')->send(new SendNewMail());

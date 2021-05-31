@@ -36,7 +36,7 @@ class contactMail extends Mailable
     public function build()
     {
         return $this->from($this->email)
-        ->subject($this->tilte)
+        ->subject($this->object)
         ->view('mails.contact')
         ->with('name', $this->name)
         ->with('content', $this->content);

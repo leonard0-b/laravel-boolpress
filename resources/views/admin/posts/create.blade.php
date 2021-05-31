@@ -9,7 +9,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form action="{{route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('admin.posts.store')}}" method="Post" enctype="multipart/form-data">
             @csrf 
             @method('POST')
                 <div class="form-group">
@@ -39,9 +39,9 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="img">Img</label>
-                    <input type="file" name="img" class="form-control-file @error('img') is-invalid @enderror" id="img">
-                    @error('img')
+                    <label for="cover">Img</label>
+                    <input type="file" name="cover" class="form-control-file @error('cover') is-invalid @enderror" id="cover">
+                    @error('cover')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>

@@ -19,6 +19,7 @@
             </div>
             <a href="{{route('admin.posts.index')}}">Posts</a>
             <p><a href="{{route('admin.categories.index')}}">Categories</a></p>
+            <p><a href="{{route('admin.tags.index')}}">Tags</a></p>
         </div>
     </div>
 </div>
