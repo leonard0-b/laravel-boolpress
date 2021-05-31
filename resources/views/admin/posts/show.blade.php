@@ -13,7 +13,9 @@
                 </div>
                 <div class="card-body">
                     {{$post->content}}
+                    @if ($post->img)
                     <img src="{{asset('storage/'.$post->img)}}" alt="{{$post->title}}">
+                    @endif
                     <div>
                         <a href="{{route('admin.posts.edit', ['post' => $post->id])}}">Edit</a>
                     </div>

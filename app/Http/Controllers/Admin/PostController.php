@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use App\Category;
+use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,8 +33,9 @@ class PostController extends Controller
     public function create()
     {   
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view ('admin.posts.create', compact('categories'));
+        return view ('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -52,22 +54,22 @@ class PostController extends Controller
         ]);
 
        $data = $request->all();
-       
-       $cover = null;
-       if (array_key_exists('cover', $data)) {
-        $cover = Storage::put('uploads', $data['cover']);
-       }
-       
+              
        $post_obj = new Post();
        $post_obj->fill($data);
 
+       if (array_key_exists('cover', $data)) {
+        $cover = Storage::put('uploads', $data['cover']);
+        $post_obj->img = $cover;
+       }
+
        $post_obj->slug = $this->generateSlug($post_obj->title);
-       $post_obj->img = $cover;
        $post_obj->save();
 
        Mail::to('mail@mail.it')->send(new SendNewMail());
 
        return redirect()->route('admin.posts.index');
+
     }
 
     /**

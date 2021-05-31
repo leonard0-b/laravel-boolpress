@@ -90,7 +90,6 @@ class CategoryController extends Controller
 
         $data = $request->all();
         $data['slug'] = $this->generateSlug($data['name'], $data['name'] != $category->name, $category->slug);
-        $category = new Category();
         $category->update($data);
 
         return redirect()->route('admin.categories.index');
