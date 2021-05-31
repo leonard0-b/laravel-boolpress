@@ -47,13 +47,12 @@
                 </div>
                 <div class="form-group">
                     <label for="tag">Tag #</label>
-                    <select class="form-control @error('tag') is-invalid @enderror" id="tag" name="tag_id" multiple>
-                        <option value="">Select</option>
+                    <select class="form-control @error('tag_ids') is-invalid @enderror" id="tag" name="tag_ids[]" multiple>
                         @foreach ($tags as $tag)
                         <option value="{{$tag->id}}">{{$tag->name}}</option>
                         @endforeach
                     </select>
-                    @error('tags')
+                    @error('tag_ids')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>

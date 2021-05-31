@@ -14,6 +14,11 @@
                 <div class="card-body">
                     {{$post->content}}
                 </div>
+                <div>
+                    @foreach ($post->tags as $tag)
+                    <a href="{{route('tag.index', ['slug' => $post->slug])}}">#{{$tag->name}}</a>
+                    @endforeach
+                </div>
             </div>
             <a class="btn btn-dark" href="{{route('posts.index')}}">Home</a>
         </div>
